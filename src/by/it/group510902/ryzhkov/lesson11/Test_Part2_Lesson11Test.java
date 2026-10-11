@@ -1,5 +1,4 @@
-package by.it.a_khmelev.lesson11;
-
+package by.it.group510902.ryzhkov.lesson11;
 
 import by.it.HomeWork;
 import org.junit.Test;
@@ -18,8 +17,9 @@ import static org.junit.Assert.fail;
 
 @SuppressWarnings("all")
 
-//поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
-//для корректной сборки теста добавьте библиотеку init.jar в проект (она находится в корне)
+// поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
+// для корректной сборки теста добавьте библиотеку init.jar в проект (она
+// находится в корне)
 public class Test_Part2_Lesson11Test extends HomeWork {
 
     private static final int RND_SEED = 123;
@@ -56,7 +56,7 @@ public class Test_Part2_Lesson11Test extends HomeWork {
                 add(Object)
                 remove(Object)
                 contains(Object)
-                                
+
                 containsAll(Collection)
                 addAll(Collection)
                 removeAll(Collection)
@@ -76,7 +76,7 @@ public class Test_Part2_Lesson11Test extends HomeWork {
                 add(Object)
                 remove(Object)
                 contains(Object)
-                                
+
                 containsAll(Collection)
                 addAll(Collection)
                 removeAll(Collection)
@@ -86,7 +86,8 @@ public class Test_Part2_Lesson11Test extends HomeWork {
         randomCheck("MyTreeSet", methods);
     }
 
-    private void randomCheck(String aClassName, String... methods) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private void randomCheck(String aClassName, String... methods)
+            throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Set<String> methodNames = new TreeSet<>(Arrays.asList(methods));
         methodNames.removeIf(key -> key == null || key.isBlank());
         Class<?> aClass = findClass(aClassName);
@@ -133,8 +134,8 @@ public class Test_Part2_Lesson11Test extends HomeWork {
             int eChecksum = checkSum(eString);
             int aChecksum = checkSum(aString);
             assertEquals(("Erros state\n" +
-                          "expectred check sum=%d for %s\n" +
-                          "   actual check sum=%d for %s\n")
+                    "expectred check sum=%d for %s\n" +
+                    "   actual check sum=%d for %s\n")
                     .formatted(eChecksum, eString, aChecksum, aString), eChecksum, aChecksum);
         }
         System.out.println("=".repeat(100) + "\nCOMPLETE: " + methodNames);
@@ -180,7 +181,6 @@ public class Test_Part2_Lesson11Test extends HomeWork {
         return rnd.nextInt(eObject.size());
     }
 
-
     private void checkStructure(Class<?> aClass) {
         if (aClass.getPackageName().equals(this.getClass().getPackageName())) {
             assertEquals("Incorrect parent", Object.class, aClass.getSuperclass());
@@ -199,7 +199,6 @@ public class Test_Part2_Lesson11Test extends HomeWork {
         }
     }
 
-
     private Map<String, Method> fill(Class<?> c, Set<String> methodNames) {
         return Stream.of(c.getMethods(), c.getDeclaredMethods())
                 .flatMap(Arrays::stream)
@@ -209,11 +208,10 @@ public class Test_Part2_Lesson11Test extends HomeWork {
                 .collect(Collectors.toMap(this::getSignature, m -> m));
     }
 
-
     private boolean notComparable(Method m) {
         return m.getReturnType() != Comparable.class &&
-               Arrays.stream(m.getParameterTypes())
-                       .noneMatch(p -> p == Comparable.class);
+                Arrays.stream(m.getParameterTypes())
+                        .noneMatch(p -> p == Comparable.class);
     }
 
     private String getSignature(Method method) {
@@ -222,15 +220,13 @@ public class Test_Part2_Lesson11Test extends HomeWork {
             StringJoiner out = new StringJoiner(
                     ",",
                     method.getReturnType().getSimpleName() + " " + method.getName() + "(",
-                    ")"
-            );
+                    ")");
             for (int i = 0, parameterTypesLength = parameterTypes.length; i < parameterTypesLength; i++) {
                 out.add(parameterTypes[i].getSimpleName());
             }
             return out.toString();
         });
     }
-
 
     public String getSignatures(Class<?> aClass) {
         return getSignatures(aClass.getMethods(), aClass.getDeclaredMethods());

@@ -1,5 +1,4 @@
-package by.it.a_khmelev.lesson12;
-
+package by.it.group510902.ryzhkov.lesson12;
 
 import by.it.HomeWork;
 import org.junit.Test;
@@ -18,8 +17,9 @@ import static org.junit.Assert.fail;
 
 @SuppressWarnings("all")
 
-//поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
-//для корректной сборки теста добавьте библиотеку init.jar в проект (она находится в корне)
+// поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
+// для корректной сборки теста добавьте библиотеку init.jar в проект (она
+// находится в корне)
 public class Test_Part2_Lesson12Test extends HomeWork {
 
     private static final int RND_SEED = 123;
@@ -57,11 +57,11 @@ public class Test_Part2_Lesson12Test extends HomeWork {
                 get(Object)
                 containsKey(Object)
                 containsValue(Object)
-                                
+
                 size()
                 clear()
                 isEmpty()
-                                
+
                 headMap(Object)
                 tailMap(Object)
                 firstKey()
@@ -79,16 +79,16 @@ public class Test_Part2_Lesson12Test extends HomeWork {
                 get(Object)
                 containsKey(Object)
                 containsValue(Object)
-                                
+
                 size()
                 clear()
                 isEmpty()
-                                
+
                 headMap(Object)
                 tailMap(Object)
                 firstKey()
                 lastKey()
-                                
+
                 lowerKey(Object)
                 floorKey(Object)
                 ceilingKey(Object)
@@ -98,7 +98,8 @@ public class Test_Part2_Lesson12Test extends HomeWork {
         randomCheck("MySplayMap", methods);
     }
 
-    private void randomCheck(String aClassName, String... methods) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private void randomCheck(String aClassName, String... methods)
+            throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Set<String> methodNames = new TreeSet<>(Arrays.asList(methods));
         methodNames.removeIf(key -> key == null || key.isBlank());
         methodNames.forEach(System.out::println);
@@ -110,10 +111,8 @@ public class Test_Part2_Lesson12Test extends HomeWork {
         Map<String, Method> methodsE = fill(eObject.getClass(), methodNames);
         Map<String, Method> methodsA = fill(aClass, methodsE);
 
-        assertEquals("Not found methods for test in:\n" + methodsA.toString().replace("),", ")\n")
-                , methodNames.size()
-                , methodsA.size()
-        );
+        assertEquals("Not found methods for test in:\n" + methodsA.toString().replace("),", ")\n"), methodNames.size(),
+                methodsA.size());
 
         for (int testNumber = 0; testNumber < INVOCATION_COUNT_PER_METHOD * methodNames.size(); testNumber++) {
             int count = rnd.nextInt(INVOCATION_COUNT_PER_METHOD * 10);
@@ -150,8 +149,8 @@ public class Test_Part2_Lesson12Test extends HomeWork {
             int eChecksum = checkSum(eString);
             int aChecksum = checkSum(aString);
             assertEquals(("Erros state\n" +
-                          "expectred check sum=%d for %s\n" +
-                          "   actual check sum=%d for %s\n")
+                    "expectred check sum=%d for %s\n" +
+                    "   actual check sum=%d for %s\n")
                     .formatted(eChecksum, eString, aChecksum, aString), eChecksum, aChecksum);
         }
         System.out.println("=".repeat(100) + "\nCOMPLETE: " + methodNames);
@@ -169,7 +168,7 @@ public class Test_Part2_Lesson12Test extends HomeWork {
                         .collect(Collectors.toUnmodifiableSet());
                 parameters[i] = collect;
             } else if (String.class.isAssignableFrom(parameterTypes[i])
-                       || i == 1 //for put(Object,Object)
+                    || i == 1 // for put(Object,Object)
             ) {
                 parameters[i] = "str" + randomInteger();
             } else if (Integer.class.isAssignableFrom(parameterTypes[i])) {
@@ -201,7 +200,6 @@ public class Test_Part2_Lesson12Test extends HomeWork {
         return rnd.nextInt(eObject.size());
     }
 
-
     private void checkStructure(Class<?> aClass) {
         if (aClass.getPackageName().equals(this.getClass().getPackageName())) {
             assertEquals("Incorrect parent", Object.class, aClass.getSuperclass());
@@ -221,7 +219,6 @@ public class Test_Part2_Lesson12Test extends HomeWork {
         }
     }
 
-
     private Map<String, Method> fill(Class<?> c, Set<String> methodNames) {
         return Stream.of(c.getMethods(), c.getDeclaredMethods())
                 .flatMap(Arrays::stream)
@@ -240,11 +237,10 @@ public class Test_Part2_Lesson12Test extends HomeWork {
                 .collect(Collectors.toMap(this::getSignature, m -> m));
     }
 
-
     private boolean notComparable(Method m) {
         return m.getReturnType() != Comparable.class &&
-               Arrays.stream(m.getParameterTypes())
-                       .noneMatch(p -> p == Comparable.class);
+                Arrays.stream(m.getParameterTypes())
+                        .noneMatch(p -> p == Comparable.class);
     }
 
     private String getSignature(Method method) {
@@ -253,15 +249,13 @@ public class Test_Part2_Lesson12Test extends HomeWork {
             StringJoiner out = new StringJoiner(
                     ",",
                     method.getReturnType().getSimpleName() + " " + method.getName() + "(",
-                    ")"
-            );
+                    ")");
             for (int i = 0, parameterTypesLength = parameterTypes.length; i < parameterTypesLength; i++) {
                 out.add(parameterTypes[i].getSimpleName());
             }
             return out.toString();
         });
     }
-
 
     public String getSignatures(Class<?> aClass) {
         return getSignatures(aClass.getMethods(), aClass.getDeclaredMethods());
